@@ -42,7 +42,6 @@ Zastosowane optymalizacje:
 ```dockerfile
 # syntax=docker/dockerfile:1
 
-# ---- Etap 1: budowanie ----
 FROM node:20-alpine3.19
 
 LABEL org.opencontainers.image.authors="Mateusz Olszewski"
@@ -90,12 +89,6 @@ Aplikacja dostępna pod adresem: [http://localhost:3000](http://localhost:3000)
 docker logs weather-app
 ```
 
-Przykładowy output:
-```
-[2024-01-15T10:23:45.123Z] Autor: Mateusz Olszewski
-[2024-01-15T10:23:45.123Z] Data uruchomienia: 2024-01-15T10:23:45.123Z
-[2024-01-15T10:23:45.123Z] Aplikacja nasłuchuje na porcie: 3000
-```
 
 ### d) Liczba warstw i rozmiar obrazu
 
@@ -117,7 +110,8 @@ docker inspect weather-app:latest | jq '.[0].RootFS.Layers | length'
 
 ## Zrzut ekranu
 
-> *(Wstaw zrzut ekranu przeglądarki pokazujący działającą aplikację)*
+<img width="693" height="564" alt="image" src="https://github.com/user-attachments/assets/55385e5c-f6e4-4b0a-8685-fc7187d44329" />
+
 
 ---
 
@@ -125,6 +119,6 @@ docker inspect weather-app:latest | jq '.[0].RootFS.Layers | length'
 
 | Technologia | Wersja | Rola |
 |---|---|---|
-| Node.js | 22 (Alpine) | Środowisko uruchomieniowe |
+| Node.js | 20 (Alpine) | Środowisko uruchomieniowe |
 | Open-Meteo API | – | Dane pogodowe (bez klucza) |
 | Docker | – | Konteneryzacja |
