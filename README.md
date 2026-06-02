@@ -43,39 +43,27 @@ Zastosowane optymalizacje:
 # syntax=docker/dockerfile:1
 
 # ---- Etap 1: budowanie ----
-FROM node:22-alpine AS builder
+FROM node:20-alpine3.19
 
-WORKDIR /app
-
-# Kopiuj najpierw pliki zależności – lepsze cache'owanie warstw
-COPY package*.json ./
-RUN npm ci --omit=dev
-
-# Kopiuj resztę kodu źródłowego
-COPY . .
-
-# ---- Etap 2: obraz finalny ----
-FROM node:22-alpine
-
-# Metadane OCI
 LABEL org.opencontainers.image.authors="Mateusz Olszewski"
 
 WORKDIR /app
 
-# Kopiuj tylko to co potrzebne z etapu builder
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app .
+COPY package*.json ./
 
-# Uruchom jako niepriwilejowany użytkownik
-USER node
+RUN npm install --omit=dev \
+    && npm cache clean --force
+
+COPY app.js .
+COPY views ./views
+COPY public ./public
 
 EXPOSE 3000
 
-# Healthcheck – sprawdza czy aplikacja odpowiada
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -qO- http://localhost:3000/ || exit 1
+HEALTHCHECK --interval=30s --timeout=3s \
+CMD wget --quiet --tries=1 --spider http://localhost:3000 || exit 1
 
-CMD ["node", "server.js"]
+CMD ["node", "app.js"]
 ```
 
 ---
