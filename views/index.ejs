@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Aplikacja pogodowa</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Aplikacja pogodowa</h1>
+
+    <form method="POST" action="/weather">
+        <select name="city">
+            <% cities.forEach(c => { %>
+                <option value="<%= c.city %>">
+                    <%= c.country %> - <%= c.city %>
+                </option>
+            <% }) %>
+        </select>
+
+        <button type="submit">Pobierz pogodę</button>
+    </form>
+
+    <% if(weather) { %>
+        <div class="weather">
+    <h2><%= weather.city %>, <%= weather.country %></h2>
+
+    <p><strong>Temperatura:</strong> <%= weather.temperature %> °C</p>
+
+    <p><strong>Prędkość wiatru:</strong>
+        <%= weather.windspeed %> km/h
+    </p>
+
+    <p><strong>Kierunek wiatru:</strong>
+        <%= weather.winddirection %>°
+    </p>
+
+    <p><strong>Czas pomiaru:</strong>
+        <%= weather.time %>
+    </p>
+</div>
+    <% } %>
+</div>
+
+</body>
+</html>

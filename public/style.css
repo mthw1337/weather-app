@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+}
+
+.container {
+    width: 400px;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.weather {
+    margin-top: 20px;
+    padding: 10px;
+    background: #eeeeee;
+    border-radius: 8px;
+}
+
+.weather p {
+    margin: 8px 0;
+}
