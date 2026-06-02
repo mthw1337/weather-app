@@ -30,7 +30,7 @@ Szczegóły implementacji zawiera plik `server.js` oraz katalog z plikami fronte
 Plik `Dockerfile` wykorzystuje **wieloetapowe budowanie obrazu** (multi-stage build):
 
 - **Etap 1 (`builder`)** – instalacja wszystkich zależności (`npm ci`) i ewentualna kompilacja.
-- **Etap 2 (finalny)** – kopiowanie wyłącznie plików produkcyjnych (`node_modules`, kod źródłowy) do czystego obrazu bazowego `node:22-alpine`.
+- **Etap 2 (finalny)** – kopiowanie wyłącznie plików produkcyjnych (`node_modules`, kod źródłowy) do czystego obrazu bazowego `node:20-alpine`.
 
 Zastosowane optymalizacje:
 - obraz bazowy `node:22-alpine` – minimalna wielkość,
