@@ -30,7 +30,7 @@ Szczegóły implementacji zawiera plik `server.js` oraz katalog z plikami fronte
 Plik `Dockerfile` wykorzystuje **wieloetapowe budowanie obrazu** (multi-stage build):
 
 - **Etap 1 (`builder`)** – instalacja wszystkich zależności (`npm ci`) i ewentualna kompilacja.
-- **Etap 2 (finalny)** – kopiowanie wyłącznie plików produkcyjnych (`node_modules`, kod źródłowy) do czystego obrazu bazowego `node:20-alpine`.
+- **Etap 2 (finalny)** – kopiowanie wyłącznie plików produkcyjnych (`node_modules`, kod źródłowy) do czystego obrazu bazowego `node:22-alpine`.
 
 Zastosowane optymalizacje:
 - obraz bazowy `node:22-alpine` – minimalna wielkość,
@@ -42,7 +42,7 @@ Zastosowane optymalizacje:
 ```dockerfile
 # syntax=docker/dockerfile:1
 
-FROM node:20-alpine3.19
+FROM node:22-alpine
 
 LABEL org.opencontainers.image.authors="Mateusz Olszewski"
 
@@ -119,6 +119,6 @@ docker inspect weather-app:latest | jq '.[0].RootFS.Layers | length'
 
 | Technologia | Wersja | Rola |
 |---|---|---|
-| Node.js | 20 (Alpine) | Środowisko uruchomieniowe |
+| Node.js | 22 (Alpine) | Środowisko uruchomieniowe |
 | Open-Meteo API | – | Dane pogodowe (bez klucza) |
 | Docker | – | Konteneryzacja |
