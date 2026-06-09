@@ -14,26 +14,26 @@ jobs:
       packages: write
 
     steps:
-      # 1. Pobierz kod
+     
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. Skonfiguruj QEMU (emulacja arm64)
+      
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
-      # 3. Skonfiguruj Docker Buildx (multi-arch)
+      
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # 4. Zaloguj się do DockerHub (dla cache)
+      
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 5. Zaloguj się do ghcr.io (GitHub Container Registry)
+     
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -41,7 +41,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 6. Zbuduj obraz dla amd64 (lokalnie do skanu) + wyeksportuj do pliku
+
       - name: Build image for scanning (amd64 only)
         uses: docker/build-push-action@v5
         with:
@@ -53,7 +53,7 @@ jobs:
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/weather-app-cache:cache
           cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/weather-app-cache:cache,mode=max
 
-      # 7. Skanuj obraz Trivy – szukaj CRITICAL i HIGH
+      
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@master
         with:
@@ -63,7 +63,7 @@ jobs:
           ignore-unfixed: true
           severity: CRITICAL,HIGH
 
-      # 8. Jeśli skan przeszedł – zbuduj i wypchnij multi-arch na ghcr.io
+      
       - name: Build and push multi-arch image to GHCR
         uses: docker/build-push-action@v5
         with:
