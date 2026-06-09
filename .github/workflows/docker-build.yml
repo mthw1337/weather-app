@@ -2,7 +2,7 @@ name: Build, Scan and Push Docker Image
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
